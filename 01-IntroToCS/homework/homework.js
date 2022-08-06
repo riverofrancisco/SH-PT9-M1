@@ -5,7 +5,7 @@ function BinarioADecimal(num) {
  var nenletras = num.toString().split('').reverse().join('');
   var suma = 0;
     for (let i = 0; i < nenletras.length ; i++) {
-        suma += Math.pow(2,i) * nenletras[i];
+        suma += Math.pow(2,i) * parseInt(nenletras[i]);//ojo que aca lo esta multiplicando a un string.
   } return suma;
 }
 
