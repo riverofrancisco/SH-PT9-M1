@@ -38,7 +38,7 @@ EL CÓDIGO ANTERIOR DEVUELVE
 1
 
 ```javascript
-console.log(bar);//IMPRIME 1
+console.log(bar);//undefined.
 console.log(baz);//baz is not defined.
 foo();//IMPRIME 'Hola!'
 function foo() { console.log('Hola!'); }
@@ -51,24 +51,24 @@ var instructor = "Tony";
 if(true) {//if(true) --> siempre va a ser true --> siempre realiza la acción
     var instructor = "Franco";//la define y la invoca.
 }
-console.log(instructor);//IMPRIME 'Franco'.?
+console.log(instructor);//IMPRIME 'Franco'
 ```
 EL CÓDIGO ANTERIOR DEVUELVE 
 Franco
 ```javascript
 var instructor = "Tony";
 console.log(instructor);//IMPRIME 'Tony'
-(function() {//¿¿Error de sintaxis?? Abre parentesis en contexto global. Y define una funcion sin invocar/ejecutar.
+(function() {//Los parentesis sirven para definir una función e invocarla al mismo tiempo.
    if(true) {
       var instructor = "Franco";
-      console.log(instructor); //IMPRIME 'Franco'. Porqué lo ejecuta?
+      console.log(instructor); //IMPRIME 'Franco'. Pero la variable está en otro contexto de ejecución (dentro de la función). No reemplaza a instructor en el contexto global. 
    }
 })();
 console.log(instructor);//IMPRIME 'Tony'
 ```
 EL CÓDIGO ANTERIOR DEVUELVE 
 Tony
-Franco?
+Franco
 Tony
 ```javascript
 var instructor = "Tony";
@@ -95,20 +95,20 @@ Franco
 ```javascript
 6 / "3" // 2
 "2" * "3" // 6
-4 + 5 + "px" // '45px'
+4 + 5 + "px" // '9px'
 "$" + 4 + 5 // '$45'
 "4" - 2 // 2
 "4px" - 2 // NaN
 7 / 0 // infinity
 {}[0] // undefined?
 parseInt("09") // 9
-5 && 2 // 2?
-2 && 5 // 5?
-5 || 0 // 5?
-0 || 5 // 0?
-[3]+[3]-[10] // -4 
+5 && 2 // 2 imprime el segundo valor.
+2 && 5 // 5
+5 || 0 // 5 porque 0 es false. Imprime el verdadero o el primer numero.
+0 || 5 // 5 
+[3]+[3]-[10] // -4? No me queda claro que hace en este caso.
 3>2>1 // true
-[] == ![] // false?
+[] == ![] // True --> parecería false pero lo convierte en numero = 0 y luego los compara y dá 0 == 0. Esto ocurre porque no hay ===, sino que == entonces puede cambiar el tipo de elemento.
 ```
 
 > Si te quedó alguna duda repasá con [este artículo](http://javascript.info/tutorial/object-conversion).
@@ -120,7 +120,7 @@ parseInt("09") // 9
 
 ```javascript
 function test() {//Abre contexto 1.
-   console.log(a);//IMPRIME 1
+   console.log(a);// undefined.
    console.log(foo());//IMPRIME 2
 
    var a = 1;
@@ -129,11 +129,11 @@ function test() {//Abre contexto 1.
    }//cierra contexto 2.
 }//cierra contexto 1.
 
-test();//ejecuta contexto 1 --> Busca variable a --> IMPRIME a --> Busca variable foo() -->
+test();//ejecuta contexto 1 --> Busca variable a --> IMPRIME undefined --> Busca variable foo() -->
 //--> ejecuta contexto 2 --> IMPRIME 2
 ```
 Al ejecutar test() la consola devuelve:
-1
+undefined
 2
 
 Y el de este código? :
@@ -149,10 +149,10 @@ function getFood(food) {//Abre contexto 1.
     return snack;//IMPRIME 'Friskies'
 }//cierra contexto 1.
 
-getFood(false);// ejecuta contexto 1 --> Abre contexto 2 --> como el argumento es (false) no ejecuta el comando dentro del if{} --> cierra contexto 2 --> devuelve nuevamente el valor de variable snack en contexto global --> cierra contexto 1.
+getFood(false);// ejecuta contexto 1 --> Abre contexto 2 --> como el argumento es (false) no ejecuta el comando dentro del if{} --> cierra contexto 2 --> devuelve snack definida en contexto 1, pero esta variable, al if ser negativo, es unndefined. --> devuelve undefined --> cierra contexto 1.
 ```
 Al ejecutar getFood(false) la consola devuelve:
-Meow Mix
+undefined
 
 ### This
 
@@ -174,7 +174,7 @@ console.log(obj.prop.getFullname());//'Aurelio De Rosa'
 
 var test = obj.prop.getFullname;// define una nueva variable/función. Acá el this hace referencia al objeto global. --> this.fullname = global.fullname = 'Juan Perez'
 
-console.log(test());//'Juan Perez'
+console.log(test());//'Juan Perez' -- tengo la duda de porque es correcto poner el (test()) en lugar de (test). Pero funciona.
 ```
 Al ejecutar getFood(false) la consola devuelve:
 'Aurelio De Rosa'
@@ -187,10 +187,10 @@ Considerando el siguiente código, ¿Cuál sería el orden en el que se muestra 
 ```javascript
 function printing() {
    console.log(1);//IMPRIME 1
-   setTimeout(function() { console.log(2); }, 1000);
-   setTimeout(function() { console.log(3); }, 0);
-   console.log(4);
+   setTimeout(function() { console.log(2); }, 1000);//guarda 2 para ejecutarlo despues de 1 seg.
+   setTimeout(function() { console.log(3); }, 0);// guarda 3 para ejecutarlo despues de 0 seg.
+   console.log(4);//IMPRIME 4
 }
 
-printing();
+printing();// Imprime 1 --> Imprime 4 --> Imprime 3 --> despues de 1 segundo Imprime 2.
 ```
