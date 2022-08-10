@@ -110,23 +110,6 @@ function crearCadena(delimitadorIzquierda, delimitadorDerecha, cadena) {
   return delimitadorIzquierda + cadena + delimitadorDerecha;
 }
 
-//const asteriscos = {
- // delimitador: '*',
-//};
-
-//function bordes(){
-//  delimitadorIzquierda = this.delimitador;
-//  delimitadorDerecha = this.delimitador;
-//}
-
-//bordes.bind(asteriscos)
-
- // crearCadena.bind
-
-
-//function asteriscos(){
-//return '*' + this.cadena + '*';
-//}
 
 let textoAsteriscos = crearCadena.bind(this,'*','*');
 let textoGuiones = crearCadena.bind(this,'-','-');
