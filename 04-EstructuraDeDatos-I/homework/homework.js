@@ -31,25 +31,36 @@ function nFibonacci(n) {
   var serieF = [0,1];
   if (1 < n){//caso base
     return (nFibonacci(n - 2) + nFibonacci(n-1))
-  }//caso base, si la longitud de la serie es menos al valor n
+  }//caso base, si la longitud de la serie es mgit enos al valor n
   else if(n === 0) return serieF[n];
   else if(n === 1) return serieF[n];
   // fn = fn-1 + fn-2
 }
 
 /*
-Implementar la clase Queue, sabiendo que es una estructura de tipo FIFO, donde el primer elemento que ingresa es el primero que se quita. Definir los siguientes métodos:
+Implementar la clase Queue, sabiendo que es una estructura de tipo FIFO, 
+donde el primer elemento que ingresa es el primero que se quita. Definir los siguientes métodos:
   - enqueue: agrega un valor respetando el orden.
   - dequeue: remueve un valor respetando el orden. Retorna undefined cuando la queue está vacía.
   - size: retorna el tamaño (cantidad de elementos) de la queue.
 
 Pueden utilizar class o función constructora.
 */
-
 function Queue() {
+  this.fila = [];
+  }
+  
+  Queue.prototype.enqueue = function(arg){
+   this.fila.push(arg);}
 
-}
+  Queue.prototype.dequeue = function(){
+    if (this.fila.length > 0){return this.fila.shift();}
+    else return undefined;}
 
+  Queue.prototype.size = function(){
+   return this.fila.length;}
+
+  
 // No modifiquen nada debajo de esta linea
 // --------------------------------
 
