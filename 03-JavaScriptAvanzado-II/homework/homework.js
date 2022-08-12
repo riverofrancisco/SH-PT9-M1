@@ -110,11 +110,11 @@ function crearCadena(delimitadorIzquierda, delimitadorDerecha, cadena) {
 }
 
 
-let textoAsteriscos = crearCadena.bind(this,'*','*');
-let textoGuiones = crearCadena.bind(this,'-','-');
-let textoUnderscore = crearCadena.bind(this,'_','_');
+let textoAsteriscos = crearCadena.bind(this,'*','*');//contexto de la funcion crear cadena
+let textoGuiones = crearCadena.bind(null,'-','-');
+let textoUnderscore = crearCadena.bind(undefined,'_','_')
 
-console.log(textoAsteriscos('queso'))
+
 // No modifiquen nada debajo de esta linea
 // --------------------------------
 
