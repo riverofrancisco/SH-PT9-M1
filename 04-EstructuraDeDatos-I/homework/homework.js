@@ -31,7 +31,7 @@ function nFibonacci(n) {
   var serieF = [0,1];
   if (1 < n){//caso base
     return (nFibonacci(n - 2) + nFibonacci(n-1))
-  }//caso base, si la longitud de la serie es mgit enos al valor n
+  }
   else if(n === 0) return serieF[n];
   else if(n === 1) return serieF[n];
   // fn = fn-1 + fn-2
