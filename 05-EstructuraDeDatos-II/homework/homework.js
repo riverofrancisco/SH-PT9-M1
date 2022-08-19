@@ -57,30 +57,16 @@ LinkedList.prototype.remove = function(){
     return ultimo.value;
 }
 
-LinkedList.prototype.search = function(parametro){
+LinkedList.prototype.search = function(buscado){
+  if (!this.head) return null;
   let current = this.head;
-  if (!current){//está vacía
-  return null};
-
-  // CHEQUEAR BIEN COMO HACERLO CON FUNCIONES Y XQ
-  if(typeof(this.head.value) === 'function'){//si el tipo de valor es una funcion
-    if(parametro(this.head.value))//si la funcion parametro evaluada en el valor del nodo... 
-    {return this.head.value;}
-
-    let current = this.head;
-
-    while (current.next){//si hay nodo siguiente...
-      current = current.next;//paso al siguiente
-      if(parametro(current.value))//si la funcion parametro evaluada en el valor del nodo... 
-      {return current.value;}
-    }
+  while (current){
+      if(current.value === buscado) return current.value;//busqueda si no es funcion
+      else if (typeof buscado === 'function'){//busqueda si es funcion
+          if(buscado(current.value)) return current.value;
+      }//si no es igual en ningun caso, sube uno y vuelve a buscar.
+      current = current.next;
   }
-  //NO es una funcion
-  if (this.head.value == parametro){return this.head.value};
-  while (current.next){//si hay nodo siguiente...
-  current = current.next;//paso al siguiente
-  if (current.value === parametro){return current.value;}}//busca en el nodo actual, el valor dentro de value y lo compara en tipo y valor con "parametro".
-
   return null;//devuelve null si no se encuentra
 }
 
@@ -112,7 +98,7 @@ HashTable.prototype.hash = function(key){//'Fran'
   return sum % this.numBuckets;//la funcion hasheadora solo nos regresa la posicion donde voy a guardar el valor
   }
     
-  HashTable.prototype.set = function(key,value){
+HashTable.prototype.set = function(key,value){
       if(typeof key !== 'string') throw new TypeError('El key debe ser string');//devuelve error si la key insertada no es string. 
       let posArr = this.hash(key);//hasta aca todo bonito pero se choca si hay 2 strings 
   //si la posición está vacía, crea un objeto.
@@ -122,15 +108,15 @@ HashTable.prototype.hash = function(key){//'Fran'
       this.buckets[posArr][key] = value;//crea una propiedad "key" en el objeto con el valor dado para saltear colisiones.
   }
     
-  HashTable.prototype.get = function(key){
-      let posArr = this.hash(key);
-      return this.buckets[posArr][key];
-  }
-
-  HashTable.prototype.hasKey = function(key){
+HashTable.prototype.get = function(key){
     let posArr = this.hash(key);
-    return this.buckets[posArr].hasOwnproperty(key);
-  }
+    return this.buckets[posArr][key];
+}
+
+HashTable.prototype.hasKey = function(key){
+    let posArr = this.hash(key);
+    return this.buckets[posArr].hasOwnProperty(key);
+}
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
