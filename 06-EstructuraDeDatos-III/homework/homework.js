@@ -18,7 +18,13 @@ function BinarySearchTree(data) {
 }
 
 BinarySearchTree.prototype.size = function(){
-  var size = 1;
+  if (this.value === null) return 0;//no es necesario en este caso.
+  if (this.left === null && this.right === null) return 1;
+  if (this.left === null && this.right !== null) return 1 + this.right.size();
+  if (this.left !== null && this.right === null) return 1 + this.left.size();
+  if (this.left !== null && this.right !== null) return 1 + this.left.size() + this.right.size();
+
+ /*  var size = 1;
   if(this.left){
     size+= 1;
     this.left.size();
@@ -27,7 +33,7 @@ BinarySearchTree.prototype.size = function(){
     size+= 1;
     this.right.size();
   }
-  return size;
+  return size; */
 }
 
 BinarySearchTree.prototype.insert = function(valor){  
@@ -39,6 +45,7 @@ BinarySearchTree.prototype.insert = function(valor){
         this.left.insert(valor);
       }	
     }
+    
     if( valor > this.value){
       if(this.right === null){
         this.right = new BinarySearchTree(valor);
@@ -76,13 +83,36 @@ return false;
 //codigo jona
 };
 
-BinarySearchTree.prototype.depthFirstForEach = function(orden){
+BinarySearchTree.prototype.depthFirstForEach = function(cb, orden){
+  //root -> izq -> der
   if (orden === 'pre-order') {
-    while (this.left){
-    }
+  //cb en root
+  cb(this.value);
+  //cb en left
+  if(this.left !== null) {this.left.depthFirstForEach(cb, orden)};
+  //cb en right
+  if(this.right !== null) {this.right.depthFirstForEach(cb, orden)};
   }
-  if (orden === 'post-order') {}
-  if (orden === 'in-order' || orden === null) {}
+  
+  //izq -> der-> root
+  if (orden === 'post-order') {
+  //cb en left
+  if(this.left !== null) {this.left.depthFirstForEach(cb, orden)};
+  //cb en right
+  if(this.right !== null) {this.right.depthFirstForEach(cb, orden)};
+  //cb en root
+  cb(this.value);
+  }
+
+  //izq -> root -> der
+  else {
+        //cb en left
+        if(this.left !== null) {this.left.depthFirstForEach(cb, orden)};
+        //cb en root
+        cb(this.value);
+        //cb en right
+        if(this.right !== null) {this.right.depthFirstForEach(cb, orden)};
+  }
 };
 
 /* In-order Traversal (izquierda-raíz-derecha)
@@ -90,7 +120,19 @@ Pre-order transversal (raíz-izquierda-derecha)
 Recorrido posterior al pedido (raíz izquierda-derecha) */
 
 
-BinarySearchTree.prototype.breadthFirstForEach = function(){};
+BinarySearchTree.prototype.breadthFirstForEach = function(cb, queue = []){
+  //guarda lo que hay en la izq --> guarda lo que hay en la derecha --> 
+  if(this.left !== null){queue.push(this.left);}
+  if(this.right !== null){queue.push(this.right);}
+
+  //ejecuta root
+  cb(this.value);
+
+  //revisar si hay elementos en la cola
+  if(queue.length > 0){
+    queue.shift().breadthFirstForEach(cb, queue = []);
+  };
+}
 
 
 // No modifiquen nada debajo de esta linea
