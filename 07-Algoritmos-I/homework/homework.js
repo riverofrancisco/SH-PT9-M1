@@ -6,14 +6,15 @@ function factorear(num) {
   // los factores por los cuales se va dividiendo a dicho número (De menor a mayor)
   // Ej: factorear(180) --> [1, 2, 2, 3, 3, 5] Ya que 1x2x2x3x3x5 = 180 y son todos números primos
   // Tu código:
-let factores = [];
-while(num % factor === 0){
-
-  factores.push(factor)
-  num = num/2;}
-
-  return arr.sort();
-
+  let arreglo = [1];
+  for (let i = 2 ; i <= num ; i++){
+    if(num % i === 0){
+      arreglo.push(i);
+      num /= i; //num = num/i; renombra el numero.
+      i -= 1;
+    }
+  }
+  return arreglo;
 }
 
 function bubbleSort(array) {
@@ -41,9 +42,17 @@ function insertionSort(array) {
   // el array recibido como parámetro utilizando arreglos
   // Devolver el array ordenado resultante
   // Tu código:
-
-
-}
+  for (let i = 1; i < array.length; i++){
+    let x = i-1;// guardo el valor
+    let temp = array[i];
+    //ahora pongo un while que me permite indicar condicion de corte.
+    while(x >= 0 && temp < array[x]){
+      array[x+1] = array[x];//hago el cambio de lugar
+      x--;
+    }
+    array[x+1] = temp;}
+    return array;
+  }
 
 
 function selectionSort(array) {
